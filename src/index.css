@@ -1,0 +1,26 @@
+/* Bruno Ace SC*/
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap");
+
+/* Bitter */
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Bitter", serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bruno Ace SC", cursive;
+  text-wrap: "balance";
+}
