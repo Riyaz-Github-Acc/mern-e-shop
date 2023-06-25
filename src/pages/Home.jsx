@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Slider from "../components/home/Slider";
 import Container from "../components/Container";
 import TrendingProducts from "../components/home/TrendingProducts";
+import CategorySection from "../components/home/CategorySection";
 
 const Home = () => {
   return (
@@ -28,7 +29,7 @@ const Home = () => {
         </div>
       </Container>
 
-      <TrendingProducts />
+      <CategorySection />
 
       <div
         className="bg-cover bg-no-repeat bg-left-top w-[100%] h-[80vh] flex flex-col justify-center items-end pr-24"
@@ -37,14 +38,17 @@ const Home = () => {
         <div></div>
         <div className="flex flex-col gap-6">
           <h3 className="text-xl md:text-2xl font-bold">Summer Sale!</h3>
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-wide">
-            50% Off on All <br /> Products
-          </h2>
+          <div className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-wide flex flex-col gap-1 md:gap-4">
+            <h2>50% Off on All</h2>
+            <h2>Products</h2>
+          </div>
           <div className="w-[100%] mt-3">
             <Button type="primaryBtn">Shop Now!</Button>
           </div>
         </div>
       </div>
+
+      <TrendingProducts />
     </div>
   );
 };

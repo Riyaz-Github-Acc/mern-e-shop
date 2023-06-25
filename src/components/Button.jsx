@@ -22,7 +22,7 @@ const Button = ({ children, type, disabled }) => {
     return (
       <button
         disabled={disabled}
-        className="bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-lg text-lg text-white font-medium font-heading py-[10px] px-[35px] mt-2 rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
+        className="bg-cyan-800 hover:bg-cyan-900 focus:outline-none focus:shadow-lg text-lg text-white font-medium font-heading py-[8px] px-[35px] mt-2 rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
       >
         {children}
       </button>

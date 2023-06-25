@@ -142,15 +142,15 @@ const productSlices = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchProductAction.fulfilled, (state, action) => {
-      state.loading = false;
       state.product = action.payload;
       state.isAdded = true;
+      state.loading = false;
     });
     builder.addCase(fetchProductAction.rejected, (state, action) => {
-      state.loading = false;
       state.product = null;
       state.isAdded = false;
       state.error = action.payload;
+      state.loading = false;
     });
 
     //Fetch All
@@ -158,15 +158,15 @@ const productSlices = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchProductsAction.fulfilled, (state, action) => {
-      state.loading = false;
       state.products = action.payload;
       state.isAdded = true;
+      state.loading = false;
     });
     builder.addCase(fetchProductsAction.rejected, (state, action) => {
-      state.loading = false;
       state.products = null;
       state.isAdded = false;
       state.error = action.payload;
+      state.loading = false;
     });
 
     // Reset Error Action

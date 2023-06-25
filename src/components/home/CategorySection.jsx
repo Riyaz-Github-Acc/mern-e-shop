@@ -2,14 +2,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Card from "../Card";
 import Container from "../Container";
 import TitleLink from "../TitleLink";
 import baseURL from "../../utils/baseURL";
-import { fetchProductsAction } from "../../redux/slices/productsSlice";
+import CategoryCard from "../CategoryCard";
 import SpinLoading from "../loaders/SpinLoading";
+import { fetchProductsAction } from "../../redux/slices/productsSlice";
 
-const TrendingProducts = () => {
+const CategorySection = () => {
   // Get Products from the Store
   const {
     products: { products },
@@ -31,7 +31,7 @@ const TrendingProducts = () => {
   return (
     <section className="my-24">
       <Container>
-        <TitleLink title="Trending Products" link="Browse All Products" />
+        <TitleLink title="Shop By Category" link="View All Categories" />
 
         <div className="flex flex-wrap flex-row items-center justify-center gap-10 lg:gap-4 mt-8">
           {error ? (
@@ -40,7 +40,7 @@ const TrendingProducts = () => {
             <SpinLoading />
           ) : (
             products?.map((product) => (
-              <Card key={product.id} product={product} />
+              <CategoryCard key={product._id} product={product} />
             ))
           )}
         </div>
@@ -49,4 +49,4 @@ const TrendingProducts = () => {
   );
 };
 
-export default TrendingProducts;
+export default CategorySection;
