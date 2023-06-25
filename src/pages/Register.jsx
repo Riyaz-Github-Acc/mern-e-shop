@@ -129,7 +129,7 @@ const Register = () => {
                     {loading ? (
                       <Button type="primaryBtn" disabled>
                         <div className="flex items-center gap-2">
-                          <h3>Loading...</h3>
+                          <div>Loading...</div>
                           <CircularLoading />
                         </div>
                       </Button>

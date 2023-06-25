@@ -13,7 +13,16 @@ const Button = ({ children, type, disabled }) => {
     return (
       <button
         disabled={disabled}
-        className="bg-black hover:bg-opacity-80 focus:outline-none focus:shadow-lg text-xl text-white font-medium font-heading py-[14px] px-[50px] rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
+        className="bg-black hover:bg-opacity-80 focus:outline-none focus:shadow-lg text-lg md:text-xl text-white font-medium font-heading py-[12px] md:py-[14px] px-[20px] md:px-[50px] rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
+      >
+        {children}
+      </button>
+    );
+  } else if (type === "addToCartBtn") {
+    return (
+      <button
+        disabled={disabled}
+        className="bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-lg text-lg text-white font-medium font-heading py-[10px] px-[35px] mt-2 rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
       >
         {children}
       </button>
