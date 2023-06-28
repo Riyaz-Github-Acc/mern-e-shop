@@ -2,14 +2,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Container from "../Container";
-import TitleLink from "../TitleLink";
-import baseURL from "../../utils/baseURL";
-import CategoryCard from "../CategoryCard";
-import SpinLoading from "../loaders/SpinLoading";
-import { fetchCategoriesAction } from "../../redux/slices/categoriesSlice";
+import baseURL from "../utils/baseURL";
+import Container from "../components/Container";
+import CategoryCard from "../components/CategoryCard";
+import SpinLoading from "../components/loaders/SpinLoading";
+import { fetchCategoriesAction } from "../redux/slices/categoriesSlice";
+import PageBanner from "../components/PageBanner";
 
-const CategorySection = () => {
+const Shop = () => {
   // Get Data from the Store
   const {
     categories: { categories },
@@ -18,7 +18,7 @@ const CategorySection = () => {
   } = useSelector((state) => state?.categories);
 
   // Build URL
-  let categoryUrl = `${baseURL}/categories?limit=4`;
+  let categoryUrl = `${baseURL}/categories?limit=3`;
 
   // Dispatch
   const dispatch = useDispatch();
@@ -27,15 +27,10 @@ const CategorySection = () => {
   }, [dispatch, categoryUrl]);
 
   return (
-    <section className="my-24">
+    <section>
+      <PageBanner pageTitle="Shop" />
       <Container>
-        <TitleLink
-          title="Shop By Category"
-          linkText="View All Categories"
-          link="/shop"
-        />
-
-        <div className="flex flex-wrap flex-row items-center justify-center gap-10 lg:gap-4 mt-8">
+        <div className="flex flex-wrap flex-row items-center justify-center gap-10 lg:gap-4">
           {error ? (
             "Something went wrong!"
           ) : loading ? (
@@ -51,4 +46,4 @@ const CategorySection = () => {
   );
 };
 
-export default CategorySection;
+export default Shop;

@@ -3,7 +3,7 @@ import NewsLetter from "./NewsLetter";
 
 const Footer = () => {
   return (
-    <>
+    <footer className="mt-14">
       <NewsLetter />
 
       <div className={styles.footer}>
@@ -54,7 +54,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </>
+    </footer>
   );
 };
 

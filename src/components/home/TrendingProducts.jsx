@@ -10,15 +10,17 @@ import { fetchProductsAction } from "../../redux/slices/productsSlice";
 import SpinLoading from "../loaders/SpinLoading";
 
 const TrendingProducts = () => {
-  // Get Products from the Store
+  // Get Data from the Store
   const {
     products: { products },
     loading,
     error,
   } = useSelector((state) => state?.products);
 
+  // Build URL
+  let productUrl = `${baseURL}/products?page=1&limit=4`;
+
   // Dispatch
-  let productUrl = `${baseURL}/products`;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -31,7 +33,11 @@ const TrendingProducts = () => {
   return (
     <section className="my-24">
       <Container>
-        <TitleLink title="Trending Products" link="Browse All Products" />
+        <TitleLink
+          title="Trending Products"
+          linkText="Browse All Products"
+          link="/shop"
+        />
 
         <div className="flex flex-wrap flex-row items-center justify-center gap-10 lg:gap-4 mt-8">
           {error ? (

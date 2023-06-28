@@ -5,6 +5,7 @@ import Slider from "../components/home/Slider";
 import Container from "../components/Container";
 import TrendingProducts from "../components/home/TrendingProducts";
 import CategorySection from "../components/home/CategorySection";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -43,7 +44,9 @@ const Home = () => {
             <h2>Products</h2>
           </div>
           <div className="w-[100%] mt-3">
-            <Button type="primaryBtn">Shop Now!</Button>
+            <Link to="/shop">
+              <Button type="primaryBtn">Shop Now!</Button>
+            </Link>
           </div>
         </div>
       </div>

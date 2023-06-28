@@ -6,13 +6,31 @@ import {
   DragHandleOutlined,
 } from "@mui/icons-material";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Container from "../../components/Container";
 import logo from "../../assets/images/logos/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategoriesAction } from "../../redux/slices/categoriesSlice";
+import baseURL from "../../utils/baseURL";
 
 const Navbar = () => {
+  // Get Data from the Store
+  const { categories, loading, error } = useSelector(
+    (state) => state?.categories?.categories
+  );
+  const categoriesToDisplay = categories?.slice(0, 3);
+
+  // Build URL
+  let categoryUrl = `${baseURL}/categories`;
+
+  // Dispatch
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCategoriesAction({ url: categoryUrl }));
+  }, [dispatch, categoryUrl]);
+
   // Find the User
   const user = JSON.parse(localStorage.getItem("userToken"));
   const isLoggedIn = user?.token ? true : false;
@@ -35,30 +53,47 @@ const Navbar = () => {
                 className={`md:flex md:flex-row gap-5 items-center text-[18px] font-medium ${
                   !open
                     ? "hidden"
-                    : "z-10 absolute top-16 right-0 flex flex-col items-center justify-center gap-2 w-full bg-slate-600 text-stone-100 px-10 py-5 transition-all"
+                    : "z-10 absolute top-12 right-0 flex flex-col items-center justify-center gap-2 w-full bg-slate-600 text-stone-100 px-10 py-5 transition-all"
                 }`}
               >
-                <Link
-                  to="/men"
-                  onClick={() => setOpen(false)}
-                  className="hover:text-cyan-800"
-                >
-                  Men
-                </Link>
-                <Link
-                  to="/women"
-                  onClick={() => setOpen(false)}
-                  className="hover:text-cyan-800"
-                >
-                  Women
-                </Link>
-                <Link
-                  to="/kids"
-                  onClick={() => setOpen(false)}
-                  className="hover:text-cyan-800"
-                >
-                  Kids
-                </Link>
+                {categoriesToDisplay?.length <= 0 ? (
+                  <>
+                    <Link
+                      to="/men"
+                      onClick={() => setOpen(false)}
+                      className="hover:text-cyan-800"
+                    >
+                      Men
+                    </Link>
+                    <Link
+                      to="/women"
+                      onClick={() => setOpen(false)}
+                      className="hover:text-cyan-800"
+                    >
+                      Women
+                    </Link>
+                    <Link
+                      to="/kids"
+                      onClick={() => setOpen(false)}
+                      className="hover:text-cyan-800"
+                    >
+                      Kids
+                    </Link>
+                  </>
+                ) : (
+                  categoriesToDisplay?.map((category) => {
+                    return (
+                      <>
+                        <Link
+                          to={`/products-filters?category=${category?.name}`}
+                          className="capitalize"
+                        >
+                          {category?.name}
+                        </Link>
+                      </>
+                    );
+                  })
+                )}
                 <Link
                   to="/shop"
                   onClick={() => setOpen(false)}

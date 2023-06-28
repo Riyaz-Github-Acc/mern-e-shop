@@ -42,7 +42,7 @@ export default function Product() {
     error,
   } = useSelector((state) => state?.products);
 
-  const [selectedImg, setSelectedImg] = useState(product?.images[0]);
+  const [selectedImg, setSelectedImg] = useState(null);
 
   return (
     <Container>

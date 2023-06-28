@@ -14,9 +14,11 @@ const initialState = {
   profile: {},
 
   userAuth: {
+    userInfo: localStorage.getItem("userToken")
+      ? JSON.parse(localStorage.getItem("userToken"))
+      : null,
     loading: false,
     error: null,
-    userInfo: {},
   },
 };
 

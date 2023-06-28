@@ -16,79 +16,12 @@ const initialState = {
   isDelete: false,
 };
 
-// Create Product Action
-export const createProductAction = createAsyncThunk(
-  "product/create",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
-    try {
-      const {
-        name,
-        desc,
-        category,
-        sizes,
-        brand,
-        colors,
-        price,
-        totalQty,
-        files,
-      } = payload;
-      const token = getState()?.users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      //FormData
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("desc", desc);
-      formData.append("category", category);
-
-      formData.append("brand", brand);
-      formData.append("price", price);
-      formData.append("totalQty", totalQty);
-
-      sizes.forEach((size) => {
-        formData.append("sizes", size);
-      });
-      colors.forEach((color) => {
-        formData.append("colors", color);
-      });
-
-      files.forEach((file) => {
-        formData.append("files", file);
-      });
-
-      // Make http Request
-      const { data } = await axios.post(
-        `${baseURL}/products`,
-        formData,
-        config
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
-
 //Fetch Product action
 export const fetchProductAction = createAsyncThunk(
   "product/details",
   async (productId, { rejectWithValue, getState, dispatch }) => {
     try {
-      const token = getState()?.users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const { data } = await axios.get(
-        `${baseURL}/products/${productId}`,
-        config
-      );
+      const { data } = await axios.get(`${baseURL}/products/${productId}`);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -101,14 +34,8 @@ export const fetchProductsAction = createAsyncThunk(
   "product/list",
   async ({ url }, { rejectWithValue, getState, dispatch }) => {
     try {
-      const token = getState()?.users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const { data } = await axios.get(`${url}`, config);
+      // Make http Request
+      const { data } = await axios.get(`${url}`);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -121,22 +48,6 @@ const productSlices = createSlice({
   name: "products",
   initialState,
   extraReducers: (builder) => {
-    //Create
-    builder.addCase(createProductAction.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(createProductAction.fulfilled, (state, action) => {
-      state.loading = false;
-      state.product = action.payload;
-      state.isAdded = true;
-    });
-    builder.addCase(createProductAction.rejected, (state, action) => {
-      state.loading = false;
-      state.product = null;
-      state.isAdded = false;
-      state.error = action.payload;
-    });
-
     //Fetch
     builder.addCase(fetchProductAction.pending, (state) => {
       state.loading = true;

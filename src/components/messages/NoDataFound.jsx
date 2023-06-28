@@ -1,6 +1,4 @@
-import ReactLoading from "react-loading";
-
-const SpinLoading = () => {
+const NoDataFound = () => {
   return (
     <div
       style={{
@@ -11,9 +9,9 @@ const SpinLoading = () => {
         width: "100vw",
       }}
     >
-      <ReactLoading type="spin" color="red" />
+      <h1 className="text-xl">No Data Found</h1>
     </div>
   );
 };
 
-export default SpinLoading;
+export default NoDataFound;
