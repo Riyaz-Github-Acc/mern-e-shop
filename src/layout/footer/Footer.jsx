@@ -3,7 +3,7 @@ import NewsLetter from "./NewsLetter";
 
 const Footer = () => {
   return (
-    <footer className="mt-14">
+    <footer className="mt-24">
       <NewsLetter />
 
       <div className={styles.footer}>

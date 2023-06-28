@@ -27,6 +27,15 @@ const Button = ({ children, type, disabled }) => {
         {children}
       </button>
     );
+  } else if (type === "paginationBtn") {
+    return (
+      <button
+        disabled={disabled}
+        className="w-10 h-10 bg-cyan-800 hover:bg-cyan-900 focus:outline-none focus:shadow-lg text-md text-white font-medium mt-2 rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
+      >
+        {children}
+      </button>
+    );
   }
 };
 

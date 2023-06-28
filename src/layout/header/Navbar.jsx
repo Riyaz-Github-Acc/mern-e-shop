@@ -7,35 +7,50 @@ import {
 } from "@mui/icons-material";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Container from "../../components/Container";
 import logo from "../../assets/images/logos/logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategoriesAction } from "../../redux/slices/categoriesSlice";
-import baseURL from "../../utils/baseURL";
 
 const Navbar = () => {
-  // Get Data from the Store
-  const { categories, loading, error } = useSelector(
-    (state) => state?.categories?.categories
-  );
-  const categoriesToDisplay = categories?.slice(0, 3);
+  const menus = [
+    {
+      title: "Men",
+      href: "/products-filters?category=men",
+    },
+    {
+      title: "Women",
+      href: "/products-filters?category=women",
+    },
+    {
+      title: "Kids",
+      href: "/products-filters?category=kids",
+    },
+    {
+      title: "Shop",
+      href: "/shop",
+    },
+  ];
 
-  // Build URL
-  let categoryUrl = `${baseURL}/categories`;
+  const [open, setOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState("");
+  const location = useLocation();
 
-  // Dispatch
-  const dispatch = useDispatch();
+  // Store the Link in LocalStorage
   useEffect(() => {
-    dispatch(fetchCategoriesAction({ url: categoryUrl }));
-  }, [dispatch, categoryUrl]);
+    localStorage.setItem("activeLink", location.pathname);
+    setActiveLink(location.pathname);
+  }, [location]);
+
+  // Get Link from LocalStorage
+  useEffect(() => {
+    const storedActiveLink = localStorage.getItem("activeLink");
+    setActiveLink(storedActiveLink || "/");
+  }, []);
 
   // Find the User
   const user = JSON.parse(localStorage.getItem("userToken"));
   const isLoggedIn = user?.token ? true : false;
-
-  const [open, setOpen] = useState(false);
 
   return (
     <div className="z-20 relative bg-zinc-200">
@@ -53,54 +68,22 @@ const Navbar = () => {
                 className={`md:flex md:flex-row gap-5 items-center text-[18px] font-medium ${
                   !open
                     ? "hidden"
-                    : "z-10 absolute top-12 right-0 flex flex-col items-center justify-center gap-2 w-full bg-slate-600 text-stone-100 px-10 py-5 transition-all"
+                    : "z-10 absolute top-12 right-0 flex flex-col items-center justify-center gap-2 w-full bg-gray-500 text-stone-100 px-10 py-5 transition-all"
                 }`}
               >
-                {categoriesToDisplay?.length <= 0 ? (
-                  <>
-                    <Link
-                      to="/men"
-                      onClick={() => setOpen(false)}
-                      className="hover:text-cyan-800"
-                    >
-                      Men
-                    </Link>
-                    <Link
-                      to="/women"
-                      onClick={() => setOpen(false)}
-                      className="hover:text-cyan-800"
-                    >
-                      Women
-                    </Link>
-                    <Link
-                      to="/kids"
-                      onClick={() => setOpen(false)}
-                      className="hover:text-cyan-800"
-                    >
-                      Kids
-                    </Link>
-                  </>
-                ) : (
-                  categoriesToDisplay?.map((category) => {
-                    return (
-                      <>
-                        <Link
-                          to={`/products-filters?category=${category?.name}`}
-                          className="capitalize"
-                        >
-                          {category?.name}
-                        </Link>
-                      </>
-                    );
-                  })
-                )}
-                <Link
-                  to="/shop"
-                  onClick={() => setOpen(false)}
-                  className="hover:text-cyan-800"
-                >
-                  Shop
-                </Link>
+                {menus.map((menu, index) => (
+                  <Link
+                    key={index}
+                    to={`${menu.href}`}
+                    onClick={() => {
+                      setActiveLink(menu.href);
+                      setOpen(false);
+                    }}
+                    className="hover:text-cyan-800"
+                  >
+                    {menu.title}
+                  </Link>
+                ))}
               </div>
 
               <div

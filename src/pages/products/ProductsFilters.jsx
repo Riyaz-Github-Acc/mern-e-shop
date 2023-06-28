@@ -24,6 +24,7 @@ import NoDataFound from "../../components/messages/NoDataFound";
 import SpinLoading from "../../components/loaders/SpinLoading";
 import Card from "../../components/Card";
 import PageBanner from "../../components/PageBanner";
+import Pagination from "../../components/Pagination";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -61,6 +62,10 @@ function classNames(...classes) {
 const sizeCategories = ["S", "M", "L", "XL", "XXL"];
 
 export default function ProductsFilters() {
+  // Page Number
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   //Dispatch
   const dispatch = useDispatch();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -79,7 +84,7 @@ export default function ProductsFilters() {
   //Build Up URL
   let productUrl = `${baseURL}/products`;
   if (category) {
-    productUrl = `${baseURL}/products?category=${category}`;
+    productUrl = `${baseURL}/products?category=${category}&page=${currentPage}&limit=${itemsPerPage}`;
   }
   if (brand) {
     productUrl = `${productUrl}&brand=${brand}`;
@@ -101,11 +106,11 @@ export default function ProductsFilters() {
         url: productUrl,
       })
     );
-  }, [dispatch, productUrl, category, size, brand, price, color]);
+  }, [dispatch, productUrl, category, size, brand, price, color, currentPage]);
 
   //Get Data from Store
   const {
-    products: { products },
+    products: { products, total },
     loading,
     error,
   } = useSelector((state) => state?.products);
@@ -775,6 +780,13 @@ export default function ProductsFilters() {
                 )}
               </div>
             </div>
+
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              total={total}
+            />
           </section>
         </main>
       </div>

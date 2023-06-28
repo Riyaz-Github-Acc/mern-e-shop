@@ -7,8 +7,8 @@ const SpinLoading = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "50vh",
-        width: "100vw",
+        height: "25vh",
+        width: "80vw",
       }}
     >
       <ReactLoading type="spin" color="red" />
