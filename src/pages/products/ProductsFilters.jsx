@@ -13,18 +13,18 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { FunnelIcon, MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 
+import baseURL from "../../utils/baseURL";
 import { fetchBrandsAction } from "../../redux/slices/brandsSlice";
 import { fetchColorsAction } from "../../redux/slices/colorsSlice";
 import { fetchProductsAction } from "../../redux/slices/productsSlice";
 
-import Products from "./Products";
-import baseURL from "../../utils/baseURL";
-import ErrorMsg from "../../components/messages/ErrorMsg";
-import NoDataFound from "../../components/messages/NoDataFound";
-import SpinLoading from "../../components/loaders/SpinLoading";
 import Card from "../../components/Card";
+import Heading from "../../components/Heading";
 import PageBanner from "../../components/PageBanner";
 import Pagination from "../../components/Pagination";
+import ErrorMsg from "../../components/messages/ErrorMsg";
+import SpinLoading from "../../components/loaders/SpinLoading";
+import NoDataFound from "../../components/messages/NoDataFound";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -66,22 +66,22 @@ export default function ProductsFilters() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  //Dispatch
+  // Dispatch
   const dispatch = useDispatch();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  //Get Query String
+  // Get Query String
   const [params, setParams] = useSearchParams();
   const category = params.get("category");
 
-  //Filters
+  // Filters
   const [color, setColor] = useState("");
   const [price, setPrice] = useState("");
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
 
-  //Build Up URL
+  // Build Up URL
   let productUrl = `${baseURL}/products`;
   if (category) {
     productUrl = `${baseURL}/products?category=${category}&page=${currentPage}&limit=${itemsPerPage}`;
@@ -99,7 +99,7 @@ export default function ProductsFilters() {
     productUrl = `${productUrl}&color=${color?.name}`;
   }
 
-  //Fetch All Products
+  // Fetch All Products
   useEffect(() => {
     dispatch(
       fetchProductsAction({
@@ -108,14 +108,14 @@ export default function ProductsFilters() {
     );
   }, [dispatch, productUrl, category, size, brand, price, color, currentPage]);
 
-  //Get Data from Store
+  // Get Data from Store
   const {
     products: { products, total },
     loading,
     error,
   } = useSelector((state) => state?.products);
 
-  //Fetch Brands
+  // Fetch Brands
   useEffect(() => {
     dispatch(
       fetchBrandsAction({
@@ -124,12 +124,12 @@ export default function ProductsFilters() {
     );
   }, [dispatch, productUrl]);
 
-  //Get Data from Store
+  // Get Data from Store
   const {
     brands: { brands },
   } = useSelector((state) => state?.brands);
 
-  //Fetch Colors
+  // Fetch Colors
   useEffect(() => {
     dispatch(
       fetchColorsAction({
@@ -138,7 +138,7 @@ export default function ProductsFilters() {
     );
   }, [dispatch, productUrl]);
 
-  //Get Data from Store
+  // Get Data from Store
   const {
     colors: { colors },
   } = useSelector((state) => state?.colors);
@@ -483,9 +483,8 @@ export default function ProductsFilters() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-light-gray pb-6">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold">
-              Product Filters
-            </h2>
+            <Heading>Product Filters</Heading>
+
             {/* sort */}
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">

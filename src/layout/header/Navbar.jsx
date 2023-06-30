@@ -106,7 +106,9 @@ const Navbar = () => {
               )}
 
               <VolunteerActivismOutlined className="cursor-pointer" />
-              <LocalMallOutlined className="cursor-pointer" />
+              <Link to="/shopping-cart">
+                <LocalMallOutlined className="cursor-pointer" />
+              </Link>
             </div>
           </div>
         </div>

@@ -15,36 +15,6 @@ const initialState = {
   isDelete: false,
 };
 
-// Create Brand Action
-export const createBrandAction = createAsyncThunk(
-  "brands/create",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
-    try {
-      const { name } = payload;
-
-      // Token Authentication
-      const token = getState()?.users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      // Make http Request
-      const { data } = await axios.post(
-        `${baseURL}/brands`,
-        {
-          name,
-        },
-        config
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
-
 // Fetch All Brand Action
 export const fetchBrandsAction = createAsyncThunk(
   "brands/fetch-all",
@@ -64,22 +34,6 @@ const brandsSlice = createSlice({
   name: "brands",
   initialState,
   extraReducers: (builder) => {
-    //Create
-    builder.addCase(createBrandAction.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(createBrandAction.fulfilled, (state, action) => {
-      state.loading = false;
-      state.brand = action.payload;
-      state.isAdded = true;
-    });
-    builder.addCase(createBrandAction.rejected, (state, action) => {
-      state.loading = false;
-      state.brand = null;
-      state.isAdded = false;
-      state.error = action.payload;
-    });
-
     //Fetch All
     builder.addCase(fetchBrandsAction.pending, (state) => {
       state.loading = true;

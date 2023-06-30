@@ -15,36 +15,6 @@ const initialState = {
   isDelete: false,
 };
 
-// Create Color Action
-export const createColorAction = createAsyncThunk(
-  "colors/create",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
-    try {
-      const { name } = payload;
-
-      // Token Authentication
-      const token = getState()?.users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      // Make http Request
-      const { data } = await axios.post(
-        `${baseURL}/colors`,
-        {
-          name,
-        },
-        config
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
-
 // Fetch All color Action
 export const fetchColorsAction = createAsyncThunk(
   "colors/fetch-all",
@@ -64,22 +34,6 @@ const colorsSlice = createSlice({
   name: "colors",
   initialState,
   extraReducers: (builder) => {
-    //Create
-    builder.addCase(createColorAction.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(createColorAction.fulfilled, (state, action) => {
-      state.loading = false;
-      state.color = action.payload;
-      state.isAdded = true;
-    });
-    builder.addCase(createColorAction.rejected, (state, action) => {
-      state.loading = false;
-      state.color = null;
-      state.isAdded = false;
-      state.error = action.payload;
-    });
-
     //Fetch All
     builder.addCase(fetchColorsAction.pending, (state) => {
       state.loading = true;

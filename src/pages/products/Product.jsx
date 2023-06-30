@@ -5,14 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { RadioGroup } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { AddShoppingCartRounded, VerifiedUser } from "@mui/icons-material";
+import {
+  AddShoppingCartRounded,
+  CreditScoreOutlined,
+  VerifiedUser,
+} from "@mui/icons-material";
 
 import stripeLogo from "../../assets/images/logos/stripe-logo.png";
 
 import Button from "../../components/Button";
 import Container from "../../components/Container";
 import SpinLoading from "../../components/loaders/SpinLoading";
+
+import {
+  addOrderToCartAction,
+  getCartItemsFromLocalStorageAction,
+} from "../../redux/slices/cartsSlice";
+
 import { fetchProductAction } from "../../redux/slices/productsSlice";
+import Swal from "sweetalert2";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -20,8 +31,8 @@ function classNames(...classes) {
 
 export default function Product() {
   const dispatch = useDispatch();
-  const { id } = useParams();
 
+  const [selectedImg, setSelectedImg] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
 
@@ -30,7 +41,8 @@ export default function Product() {
     setActiveTab(index);
   };
 
-  // Dispatch
+  // Get ID from Params
+  const { id } = useParams();
   useEffect(() => {
     dispatch(fetchProductAction(id));
   }, [id, dispatch]);
@@ -42,7 +54,68 @@ export default function Product() {
     error,
   } = useSelector((state) => state?.products);
 
-  const [selectedImg, setSelectedImg] = useState(null);
+  //Get Cart Items
+  useEffect(() => {
+    dispatch(getCartItemsFromLocalStorageAction());
+  }, [dispatch]);
+
+  // Get Data from Store
+  const { cartItems } = useSelector((state) => state?.carts);
+  const productExists = cartItems?.find(
+    (item) => item?._id?.toString() === product?._id.toString()
+  );
+
+  //Add to cart handler
+  const addToCartHandler = () => {
+    //check if product is in cart
+    if (productExists) {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This product is already in cart",
+      });
+    }
+
+    //Check If Color is Selected
+    if (selectedColor === "") {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...!",
+        text: "Please select product color",
+      });
+    }
+
+    //Check If Size is Selected
+    if (selectedSize === "") {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select  product size",
+      });
+    }
+
+    dispatch(
+      addOrderToCartAction({
+        _id: product?._id,
+        name: product?.name,
+        qty: 1,
+        price: product?.price,
+        description: product?.description,
+        color: selectedColor,
+        size: selectedSize,
+        image: product?.images[0],
+        totalPrice: product?.price,
+        qtyLeft: product?.qtyLeft,
+      })
+    );
+
+    Swal.fire({
+      icon: "success",
+      title: "Good Job",
+      text: "Product added to cart successfully",
+    });
+    return dispatch(getCartItemsFromLocalStorageAction());
+  };
 
   return (
     <Container>
@@ -81,7 +154,7 @@ export default function Product() {
               </section>
 
               <section className="flex-1">
-                <div className="flex flex-col gap-6 px-10">
+                <div className="flex flex-col gap-5 px-5">
                   {/* Name */}
                   <h2 className="font-semibold text-2xl md:text-3xl">
                     {product?.name}
@@ -198,14 +271,37 @@ export default function Product() {
                     </RadioGroup>
                   </div>
 
-                  {/* Add To Cart Button */}
-                  <div className="mt-3">
-                    <Button type="primaryBtn">
-                      <span className="flex flex-row items-center justify-center gap-3">
-                        <AddShoppingCartRounded />
-                        Add To Cart
-                      </span>
-                    </Button>
+                  <div className="flex flex-wrap items-center justify-between">
+                    {/* Add To Cart Button */}
+                    {product?.qtyLeft <= 0 ? (
+                      <Button type="primaryBtn" disabled="disabled">
+                        <AddShoppingCartRounded /> Add To Cart
+                      </Button>
+                    ) : (
+                      <div className="mt-3">
+                        <Button
+                          type="productPageBtn"
+                          onClick={() => addToCartHandler()}
+                        >
+                          <span className="flex flex-row items-center justify-center gap-3">
+                            <AddShoppingCartRounded />
+                            Add To Cart
+                          </span>
+                        </Button>
+                      </div>
+                    )}
+
+                    {/* Proceed To Checkout Button */}
+                    {cartItems.length > 0 && (
+                      <Link to="/shopping-cart" className="mt-3">
+                        <Button type="productPageBtn" btnType="checkOut">
+                          <span className="flex flex-row items-center justify-center gap-3">
+                            <CreditScoreOutlined />
+                            Proceed To Checkout
+                          </span>
+                        </Button>
+                      </Link>
+                    )}
                   </div>
 
                   {/* Additional Details */}
@@ -221,10 +317,6 @@ export default function Product() {
                       <li className="flex flex-row gap-3">
                         <VerifiedUser />
                         No Hassle Refunds
-                      </li>
-                      <li className="flex flex-row gap-3">
-                        <VerifiedUser />
-                        Secure Payments
                       </li>
                     </ul>
                     <div className="mt-8">

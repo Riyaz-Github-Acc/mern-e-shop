@@ -11,6 +11,7 @@ import Product from "./pages/products/Product";
 import Footer from "./layout/footer/Footer";
 import Shop from "./pages/Shop";
 import ProductsFilters from "./pages/products/ProductsFilters";
+import ShoppingCart from "./pages/ShoppingCart";
 
 const App = () => {
   return (
@@ -23,6 +24,15 @@ const App = () => {
         <Route path="/shop" element={<Shop />} />
         <Route path="/products/:id" element={<Product />} />
         <Route path="/products-filters" element={<ProductsFilters />} />
+
+        <Route
+          path="/shopping-cart"
+          element={
+            <AuthRoute>
+              <ShoppingCart />
+            </AuthRoute>
+          }
+        />
 
         <Route
           path="/profile"

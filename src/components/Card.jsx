@@ -3,7 +3,6 @@
 import { Link } from "react-router-dom";
 
 import Button from "./Button";
-import CircularLoading from "./loaders/CircularLoading";
 
 const Card = ({ product }) => {
   return (
@@ -26,17 +25,6 @@ const Card = ({ product }) => {
           <div className="text-xl font-semibold">{product?.name}</div>
           <h3 className="font-semibold">₹ {product?.price}</h3>
           <Button type="addToCartBtn">Add To Cart</Button>
-
-          {/* {loading ? (
-            <Button type="addToCartBtn" disabled>
-              <div className="flex flex-row items-center justify-center gap-2">
-                <div>Loading...</div>
-                <CircularLoading />
-              </div>
-            </Button>
-          ) : (
-            <Button type="addToCartBtn">Add To Cart</Button>
-          )} */}
         </div>
       </div>
     </Link>

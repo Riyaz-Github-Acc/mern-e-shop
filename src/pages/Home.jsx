@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 import offerBanner from "../assets/images/home/offer-banner.jpeg";
 
 import Button from "../components/Button";
+import Heading from "../components/Heading";
 import Slider from "../components/home/Slider";
 import Container from "../components/Container";
 import TrendingProducts from "../components/home/TrendingProducts";
 import CategorySection from "../components/home/CategorySection";
-import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -14,9 +16,8 @@ const Home = () => {
 
       <Container>
         <div className="flex flex-col items-center justify-center gap-5 text-center my-16">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold">
-            Get 25% off during our one-time sale
-          </h2>
+          <Heading>Get 25% off during our one-time sale</Heading>
+
           <div className="flex flex-col gap-2 md:gap-1 text-lg md:text-xl font-medium text-gray-500 px-1">
             <p>
               Most of our products are limited releases that won&#39;t come
