@@ -20,33 +20,63 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
-    // image: "",
   });
-  //---Destructuring---
-  const { userName, email, password, image } = formData;
+
   //---onchange handler----
-  const onChangeHandler = (e) => {
+  const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //---onsubmit handler----
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    dispatch(registerUserAction({ userName, email, password }));
+  //File
+  const [file, setFile] = useState(null);
+  const [fileError, setFileError] = useState(null);
+
+  //File Handle Change
+  const handleFileChange = (event) => {
+    const newFile = event.target.files[0] || { profilePicUploadPlaceholder };
+
+    //Image Validation
+    if (newFile?.size > 1000000) {
+      setFileError(`${newFile?.name} is too large`);
+    }
+    if (!newFile?.type?.startsWith("image/")) {
+      setFileError(`${newFile?.name} is not an image`);
+    }
+
+    setFile(newFile);
   };
 
   // Get the Data from Store
   const { loading, error, user } = useSelector((state) => state?.users);
 
-  // Redirect After Register
-  // useEffect(() => {
-  //   if (user) {
-  //     window.location.href = "/login";
-  //   }
-  // }, [user]);
+  //---onsubmit handler----
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      registerUserAction({
+        userName: formData?.userName,
+        email: formData?.email,
+        password: formData?.password,
+        file,
+      })
+    );
+
+    // Redirect After Register
+    // window.location.reload();
+
+    // Reset Form
+    setFormData({
+      userName: "",
+      email: "",
+      password: "",
+    });
+  };
 
   return (
     <>
+      {error && <ErrorMsg message={error?.message} />}
+      {fileError && <ErrorMsg message={fileError} />}
+
       <section className="flex flex-col items-center justify-center bg-gray-100 overflow-x-hidden">
         <div className="relative container px-4 py-12 mx-auto">
           <div className="absolute inset-0 bg-blue-200 my-24 ml-4" />
@@ -57,20 +87,15 @@ const Register = () => {
                   Sign up for an account
                 </h3>
 
-                {error && <ErrorMsg message={error?.message} />}
-
                 <p className="mb-10 font-semibold font-heading">
                   One more step to go
                 </p>
-                <form
-                  className="flex flex-wrap -mx-4"
-                  onSubmit={onSubmitHandler}
-                >
+                <form className="flex flex-wrap -mx-4" onSubmit={handleSubmit}>
                   <div className="w-full md:w-1/2 px-4 mb-6">
                     <input
                       name="userName"
-                      value={userName}
-                      onChange={onChangeHandler}
+                      value={formData?.userName}
+                      onChange={handleOnChange}
                       className="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md"
                       type="text"
                       placeholder="User Name"
@@ -80,8 +105,8 @@ const Register = () => {
                   <div className="w-full md:w-1/2 px-4 mb-6">
                     <input
                       name="email"
-                      value={email}
-                      onChange={onChangeHandler}
+                      value={formData?.email}
+                      onChange={handleOnChange}
                       className="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md"
                       type="email"
                       placeholder="Enter Your Email"
@@ -91,39 +116,43 @@ const Register = () => {
                   <div className="w-full md:w-1/2 px-4 mb-8">
                     <input
                       name="password"
-                      value={password}
-                      onChange={onChangeHandler}
+                      value={formData?.password}
+                      onChange={handleOnChange}
                       className="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md"
                       type="password"
                       placeholder="Enter Your Password"
                     />
                   </div>
 
-                  {/* <div className="flex flex-row items-center justify-between w-full md:w-1/2 px-4 mb-8">
+                  <div className="flex flex-row items-center justify-between w-full md:w-1/2 px-4 mb-8">
                     <img
-                      src={profilePicUploadPlaceholder}
+                      src={
+                        file
+                          ? URL.createObjectURL(file)
+                          : profilePicUploadPlaceholder
+                      }
                       alt="profilePic"
-                      className="w-20 h-20"
+                      className="w-24 h-24 object-cover rounded-md"
                     />
 
                     <label
                       htmlFor="profilePic"
-                      className="flex flex-row items-center gap-3 text-xl cursor-pointer"
+                      className="flex flex-row items-center gap-3 text-lg cursor-pointer"
                     >
                       <div>
                         <CloudUploadOutlined fontSize="large" />
                       </div>
                       <p>Upload Image</p>
                     </label>
+
                     <input
                       id="profilePic"
-                      name="image"
-                      value={image}
-                      onChange={onChangeHandler}
                       type="file"
+                      onChange={handleFileChange}
+                      className="cursor-pointer"
                       hidden
                     />
-                  </div> */}
+                  </div>
 
                   <div className="flex sm:flex-row flex-col sm:gap-10 gap-5 items-center w-full px-4">
                     {loading ? (

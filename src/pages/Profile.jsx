@@ -77,7 +77,7 @@ const Profile = () => {
           </li>
         </ul>
 
-        <div className="w-full md:w-[100%] h-[100%] bg-zinc-200 py-5 px-10">
+        <div className="w-full md:w-[100%] h-[100%] bg-zinc-200 py-5 px-10 rounded-lg">
           {activeTab === 0 && <UserDetails />}
           {activeTab === 1 && <OrderDetails />}
           {activeTab === 2 && <ShippingAddress />}

@@ -4,15 +4,44 @@ import {
   VolunteerActivismOutlined,
   LocalMallOutlined,
   DragHandleOutlined,
+  LogoutOutlined,
 } from "@mui/icons-material";
 
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import Container from "../../components/Container";
 import logo from "../../assets/images/logos/logo.png";
 
+import Container from "../../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItemsFromLocalStorageAction } from "../../redux/slices/cartsSlice";
+import { logoutAction } from "../../redux/slices/usersSlice";
+
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
+  // Find the User
+  const user = JSON.parse(localStorage.getItem("userToken"));
+  const isLoggedIn = user?.token ? true : false;
+
+  // Get Cart Items from Local Storage
+  useEffect(() => {
+    dispatch(getCartItemsFromLocalStorageAction());
+  }, [dispatch]);
+  const { cartItems } = useSelector((state) => state?.carts);
+
+  // Logout Handler
+  const handleLogout = () => {
+    dispatch(logoutAction());
+
+    // Reload
+    window.location.reload();
+
+    // Redirect
+    window.location.href = "/login";
+  };
+
   const menus = [
     {
       title: "Men",
@@ -32,28 +61,8 @@ const Navbar = () => {
     },
   ];
 
-  const [open, setOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("");
-  const location = useLocation();
-
-  // Store the Link in LocalStorage
-  useEffect(() => {
-    localStorage.setItem("activeLink", location.pathname);
-    setActiveLink(location.pathname);
-  }, [location]);
-
-  // Get Link from LocalStorage
-  useEffect(() => {
-    const storedActiveLink = localStorage.getItem("activeLink");
-    setActiveLink(storedActiveLink || "/");
-  }, []);
-
-  // Find the User
-  const user = JSON.parse(localStorage.getItem("userToken"));
-  const isLoggedIn = user?.token ? true : false;
-
   return (
-    <div className="z-20 relative bg-zinc-200">
+    <div className="z-20 relative text-gray-700 bg-zinc-200">
       <Container>
         <div className="flex flex-row items-center justify-between">
           <div className="py-1">
@@ -75,10 +84,7 @@ const Navbar = () => {
                   <Link
                     key={index}
                     to={`${menu.href}`}
-                    onClick={() => {
-                      setActiveLink(menu.href);
-                      setOpen(false);
-                    }}
+                    onClick={() => setOpen(false)}
                     className="hover:text-cyan-800"
                   >
                     {menu.title}
@@ -106,9 +112,18 @@ const Navbar = () => {
               )}
 
               <VolunteerActivismOutlined className="cursor-pointer" />
-              <Link to="/shopping-cart">
+              <Link to="/shopping-cart" className="flex flex-row items-center">
                 <LocalMallOutlined className="cursor-pointer" />
+                <div className="flex items-center justify-center w-[22px] h-[22px] bg-cyan-800 text-sm text-white rounded-full p-1">
+                  {cartItems?.length > 0 ? cartItems.length : 0}
+                </div>
               </Link>
+
+              {isLoggedIn && (
+                <div onClick={handleLogout}>
+                  <LogoutOutlined className="cursor-pointer" />
+                </div>
+              )}
             </div>
           </div>
         </div>

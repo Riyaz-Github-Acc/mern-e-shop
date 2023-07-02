@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +7,8 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { CreditScoreOutlined, CardGiftcardOutlined } from "@mui/icons-material";
 
 import Button from "../components/Button";
+import Container from "../components/Container";
+import PageBanner from "../components/PageBanner";
 import ErrorMsg from "../components/messages/ErrorMsg";
 import CircularLoading from "../components/loaders/CircularLoading";
 
@@ -15,8 +18,6 @@ import {
   removeOrderItemQty,
 } from "../redux/slices/cartsSlice";
 import { fetchCouponAction } from "../redux/slices/couponsSlice";
-import Container from "../components/Container";
-import PageBanner from "../components/PageBanner";
 
 export default function ShoppingCart() {
   // Dispatch
@@ -34,9 +35,7 @@ export default function ShoppingCart() {
   };
 
   // Get Coupon from Store
-  const { coupon, loading, error, isAdded } = useSelector(
-    (state) => state?.coupons
-  );
+  const { coupon, loading, error } = useSelector((state) => state?.coupons);
 
   // Get Cart Items from Store
   const { cartItems } = useSelector((state) => state?.carts);
@@ -82,79 +81,86 @@ export default function ShoppingCart() {
               role="list"
               className="flex flex-col gap-6 bg-white px-6 py-6 rounded-xl"
             >
-              {cartItems?.map((product) => (
-                <li key={product._id} className="flex">
-                  <div className="flex-shrink-0">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="h-32 w-32 rounded-md object-cover object-center sm:h-48 sm:w-48"
-                    />
-                  </div>
-
-                  <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                    <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                      <div>
-                        <div className="flex justify-between">
-                          <p className="text-sm md:text-lg font-medium text-light-blue">
-                            {product.name}
-                          </p>
-                        </div>
-
-                        <div className="flex text-sm md:text-md text-dark-blue my-2 md:my-3">
-                          <p className="capitalize">{product.color}</p>
-
-                          <p className="ml-4 border-l border-zinc-200 pl-4">
-                            {product.size}
-                          </p>
-                        </div>
-
-                        <p className="text-sm md:text-[16px] font-medium text-[#2a2a2a]">
-                          ₹ {product?.price} x {product?.qty} = ₹{" "}
-                          {product?.totalPrice}
-                        </p>
+              {cartItems.length <= 0
+                ? "No products found! Please add some products to your cart!"
+                : cartItems?.map((product) => (
+                    <li key={product._id} className="flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="h-32 w-32 rounded-md object-cover object-center sm:h-48 sm:w-48"
+                        />
                       </div>
 
-                      <div className="mt-4 sm:mt-0 sm:pr-9">
-                        <label className="sr-only">
-                          Quantity, {product.name}
-                        </label>
-                        <select
-                          onChange={(e) =>
-                            changeOrderItemQtyHandler(
-                              product?._id,
-                              e.target.value
-                            )
-                          }
-                          className="w-10 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-200 sm:text-sm"
-                        >
-                          {/* Quantity Left  */}
-                          {[...Array(product?.qtyLeft)?.keys()]?.map((x) => {
-                            return (
-                              <option key={x} value={x + 1}>
-                                {x + 1}
-                              </option>
-                            );
-                          })}
-                        </select>
+                      <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+                        <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+                          <div>
+                            <div className="flex justify-between">
+                              <p className="text-sm md:text-lg font-medium text-light-blue">
+                                {product.name}
+                              </p>
+                            </div>
 
-                        {/* Remove */}
-                        <div className="absolute top-0 right-0">
-                          <button
-                            onClick={() =>
-                              removeOrderItemQtyHandler(product?._id)
-                            }
-                            className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                          >
-                            <span className="sr-only">Remove</span>
-                            <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-                          </button>
+                            <div className="flex text-sm md:text-md text-dark-blue my-2 md:my-3">
+                              <p className="capitalize">{product.color}</p>
+
+                              <p className="ml-4 border-l border-zinc-200 pl-4">
+                                {product.size}
+                              </p>
+                            </div>
+
+                            <p className="text-sm md:text-[16px] font-medium text-[#2a2a2a]">
+                              ₹ {product?.price} x {product?.qty} = ₹{" "}
+                              {product?.totalPrice}
+                            </p>
+                          </div>
+
+                          <div className="mt-4 sm:mt-0 sm:pr-9">
+                            <label className="sr-only">
+                              Quantity, {product.name}
+                            </label>
+                            <select
+                              onChange={(e) =>
+                                changeOrderItemQtyHandler(
+                                  product?._id,
+                                  e.target.value
+                                )
+                              }
+                              className="w-10 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-200 sm:text-sm"
+                            >
+                              {/* Quantity Left  */}
+                              {[...Array(product?.qtyLeft)?.keys()]?.map(
+                                (x) => {
+                                  return (
+                                    <option key={x} value={x + 1}>
+                                      {x + 1}
+                                    </option>
+                                  );
+                                }
+                              )}
+                            </select>
+
+                            {/* Remove */}
+                            <div className="absolute top-0 right-0">
+                              <button
+                                onClick={() =>
+                                  removeOrderItemQtyHandler(product?._id)
+                                }
+                                className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+                              >
+                                <span className="sr-only">Remove</span>
+                                <XMarkIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </li>
-              ))}
+                    </li>
+                  ))}
             </ul>
           </section>
 

@@ -5,7 +5,7 @@ const Button = ({ children, type, onClick, disabled, btnType }) => {
       <button
         onClick={onClick}
         disabled={disabled}
-        className="bg-cyan-800 hover:bg-cyan-900 focus:outline-none focus:shadow-lg text-lg text-white font-medium font-heading py-[14px] px-[50px] rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
+        className="bg-cyan-800 hover:bg-cyan-900 focus:outline-none focus:shadow-lg text-lg text-white whitespace-nowrap font-medium font-heading py-[14px] px-[50px] rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed"
       >
         {children}
       </button>
@@ -46,7 +46,7 @@ const Button = ({ children, type, onClick, disabled, btnType }) => {
           btnType === "checkOut"
             ? "bg-red-500 hover:bg-red-400 whitespace-nowrap"
             : "bg-cyan-800 hover:bg-cyan-900"
-        } w-[250px]  focus:outline-none focus:shadow-lg text-lg text-white font-medium font-heading py-[14px] rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed`}
+        } w-[250px] focus:outline-none focus:shadow-lg text-lg text-white font-medium font-heading py-[14px] rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed`}
       >
         {children}
       </button>
@@ -54,6 +54,18 @@ const Button = ({ children, type, onClick, disabled, btnType }) => {
   } else if (type === "greenBtn") {
     return (
       <button className="inline-flex  text-center mt-4 items-center rounded border border-transparent bg-green-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-green-800 focus:outline-none focus:border-zinc-200 focus:ring-zinc-200">
+        {children}
+      </button>
+    );
+  } else if (type === "editDeleteBtn") {
+    return (
+      <button
+        className={`${
+          btnType === "delete"
+            ? "bg-red-500 hover:bg-red-400"
+            : "bg-cyan-800 hover:bg-cyan-900"
+        } w-24 flex items-center justify-center text-center rounded border border-transparent py-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:border-zinc-200 focus:ring-zinc-200`}
+      >
         {children}
       </button>
     );

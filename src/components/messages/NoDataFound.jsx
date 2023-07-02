@@ -6,7 +6,7 @@ const NoDataFound = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "25vh",
-        width: "80vw",
+        width: "100%",
       }}
     >
       <h1 className="text-xl">No Data Found</h1>
