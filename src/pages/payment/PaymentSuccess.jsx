@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 
-import failedImg from "../assets/images/payment/failed-img.jpeg";
+import successImg from "../../assets/images/payment/success-img.jpeg";
 
-export default function PaymentFailed() {
+export default function PaymentSuccess() {
   return (
     <>
       <main className="relative lg:min-h-full mt-24">
         <div className="overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-12">
           <img
-            src={failedImg}
-            alt="Payment Failed"
+            src={successImg}
+            alt="Payment Success"
             className="h-full w-full object-cover object-center"
           />
         </div>
@@ -18,13 +18,14 @@ export default function PaymentFailed() {
           <div className="mx-auto max-w-2xl py-16 px-4 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-32 xl:gap-x-24">
             <div className="lg:col-start-2">
               <h1 className="text-sm font-medium text-indigo-600">
-                Payment failed
+                Payment successful
               </h1>
               <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                Oops...! Sorry
+                Thanks for ordering
               </p>
               <p className="mt-2 text-base text-gray-500">
-                Something went wrong! Try again later!
+                We appreciate your order, we’re currently processing it. So hang
+                tight and we’ll send you confirmation very soon!
               </p>
 
               <div className="mt-16 border-t border-gray-200 py-6 text-right">

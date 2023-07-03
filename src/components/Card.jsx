@@ -19,12 +19,26 @@ const Card = ({ product }) => {
             alt="product.images[1]"
             className="absolute w-[100%] h-[100%] object-cover group-hover:z-20"
           />
+
+          {product?.qtyLeft <= 0 && (
+            <div className="absolute top-3 right-2 text-sm text-white font-medium bg-red-500 px-2 py-1 rounded-md z-40">
+              Out Of Stock!
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-2 px-4 py-4">
           <div className="text-xl font-semibold">{product?.name}</div>
           <h3 className="font-semibold">₹ {product?.price}</h3>
-          <Button type="addToCartBtn">Add To Cart</Button>
+          {product?.qtyLeft <= 0 ? (
+            <Button type="primaryBtn" btnType="addToCart">
+              Read More
+            </Button>
+          ) : (
+            <Button type="primaryBtn" btnType="addToCart">
+              Add To Cart
+            </Button>
+          )}
         </div>
       </div>
     </Link>

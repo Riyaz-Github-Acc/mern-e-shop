@@ -6,6 +6,7 @@ import brandReducer from "./slices/brandsSlice";
 import colorReducer from "./slices/colorsSlice";
 import orderReducer from "./slices/ordersSlice";
 import couponReducer from "./slices/couponsSlice";
+import reviewsReducer from "./slices/reviewsSlice";
 import productReducer from "./slices/productsSlice";
 import categoryReducer from "./slices/categoriesSlice";
 
@@ -18,6 +19,7 @@ const store = configureStore({
     colors: colorReducer,
     orders: orderReducer,
     coupons: couponReducer,
+    reviews: reviewsReducer,
     products: productReducer,
     categories: categoryReducer,
   },

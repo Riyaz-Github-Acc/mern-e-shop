@@ -12,9 +12,10 @@ import Footer from "./layout/footer/Footer";
 import Shop from "./pages/Shop";
 import ProductsFilters from "./pages/products/ProductsFilters";
 import ShoppingCart from "./pages/ShoppingCart";
-import OrderPayment from "./pages/OrderPayment";
-import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentFailed from "./pages/PaymentFailed";
+import OrderPayment from "./pages/payment/OrderPayment";
+import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import PaymentFailed from "./pages/payment/PaymentFailed";
+import AddReview from "./components/AddReview";
 
 const App = () => {
   return (
@@ -44,6 +45,15 @@ const App = () => {
           element={
             <AuthRoute>
               <OrderPayment />
+            </AuthRoute>
+          }
+        />
+
+        <Route
+          path="/add-review/:id"
+          element={
+            <AuthRoute>
+              <AddReview />
             </AuthRoute>
           }
         />

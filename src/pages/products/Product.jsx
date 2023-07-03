@@ -168,13 +168,15 @@ export default function Product() {
                   {/* Ratings */}
                   <div>
                     <div className="flex items-center gap-3 text-black font-semibold">
-                      {product?.averageRating}
+                      {product?.reviews?.length > 0
+                        ? product?.averageRating
+                        : 0}
                       <div className="flex items-center">
                         {[0, 1, 2, 3, 4].map((rating) => (
                           <StarIcon
                             key={rating}
                             className={classNames(
-                              product?.averageRating > rating
+                              +product?.averageRating > rating
                                 ? "text-yellow-400"
                                 : "text-gray-500",
                               "h-5 w-5 flex-shrink-0"
@@ -188,7 +190,7 @@ export default function Product() {
                       </p>
                     </div>
 
-                    <Link to={`/reviews/${product?._id}`}>
+                    <Link to={`/add-review/${product?._id}`}>
                       <div className="text-blue-800 hover:underline font-medium w-fit mt-3">
                         Leave a review
                       </div>
@@ -257,7 +259,7 @@ export default function Product() {
                               return classNames(
                                 checked
                                   ? "bg-red-500 border-transparent  text-white hover:bg-red-400"
-                                  : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50",
+                                  : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50",
                                 "border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 cursor-pointer"
                               );
                             }}
@@ -337,7 +339,7 @@ export default function Product() {
             </div>
 
             <section className="my-10">
-              <div className="flex flex-row justify-center gap-8 mb-5">
+              <div className="flex flex-row justify-center gap-8 mb-8">
                 <h1
                   className={`text-xl font-semibold text-gray-900 cursor-pointer transition-all duration-300 hover:border-b-4 hover:border-red-500 ${
                     activeTab === 1 ? "border-b-4 border-red-500" : ""
@@ -358,11 +360,8 @@ export default function Product() {
 
               {/* Reviews */}
               {activeTab === 1 && (
-                <div
-                  aria-labelledby="reviews-heading"
-                  className="mt-16 sm:mt-12"
-                >
-                  <div className="mt-6 space-y-10 divide-y divide-gray-200 border-t border-b border-gray-200 pb-10">
+                <div aria-labelledby="reviews-heading">
+                  <div className="space-y-10 divide-y divide-gray-200 border-t border-b border-gray-300 pb-10">
                     {product?.reviews.map((review) => (
                       <div
                         key={review._id}
@@ -370,49 +369,41 @@ export default function Product() {
                       >
                         <div className="lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8">
                           <div className="flex items-center xl:col-span-1">
-                            {/* <div className="flex items-center">
-                      {[0, 1, 2, 3, 4].map((rating) => (
-                        <StarIcon
-                          key={rating}
-                          className={classNames(
-                            review.rating > rating
-                              ? "text-yellow-400"
-                              : "text-gray-200",
-                            "h-5 w-5 flex-shrink-0"
-                          )}
-                          aria-hidden="true"
-                        />
-                      ))}
-                    </div> */}
-                            <p className="ml-3 text-sm text-gray-700">
-                              {review.rating}
-                              <span className="sr-only"> out of 5 stars</span>
+                            <div className="flex items-center">
+                              {[0, 1, 2, 3, 4].map((rating) => (
+                                <StarIcon
+                                  key={rating}
+                                  className={classNames(
+                                    review.rating > rating
+                                      ? "text-yellow-400"
+                                      : "text-gray-500",
+                                    "h-5 w-5 flex-shrink-0"
+                                  )}
+                                  aria-hidden="true"
+                                />
+                              ))}
+                            </div>
+                            <p className="ml-3 text-sm text-gray-900">
+                              {review?.rating}
                             </p>
                           </div>
 
                           <div className="mt-4 lg:mt-6 xl:col-span-2 xl:mt-0">
-                            <h3 className="text-sm font-medium text-gray-900">
-                              {review?.message}
-                            </h3>
-
-                            <div
-                              className="mt-3 space-y-6 text-sm text-gray-500"
-                              dangerouslySetInnerHTML={{
-                                __html: review.content,
-                              }}
-                            />
+                            <p className="text-sm font-medium text-gray-900">
+                              {review?.comment}
+                            </p>
                           </div>
                         </div>
 
                         <div className="mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
-                          <p className="font-medium text-gray-900">
-                            {review.author}
+                          <p className="text-lg font-medium text-gray-900">
+                            {review?.user?.userName}
                           </p>
                           <time
                             dateTime={review.datetime}
-                            className="ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0"
+                            className="ml-4 border-l border-gray-300 pl-4 text-gray-900 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0"
                           >
-                            {review.date}
+                            {new Date(review?.createdAt)?.toLocaleDateString()}
                           </time>
                         </div>
                       </div>

@@ -2,15 +2,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import { getCartItemsFromLocalStorageAction } from "../redux/slices/cartsSlice";
-import { placeOrderAction } from "../redux/slices/ordersSlice";
-import { getUserProfileAction } from "../redux/slices/usersSlice";
+import { placeOrderAction } from "../../redux/slices/ordersSlice";
+import { getUserProfileAction } from "../../redux/slices/usersSlice";
+import { getCartItemsFromLocalStorageAction } from "../../redux/slices/cartsSlice";
 
-import ErrorMsg from "../components/messages/ErrorMsg";
-import AddShippingAddress from "../components/AddShippingAddress";
-import CircularLoading from "../components/loaders/CircularLoading";
-import Container from "../components/Container";
-import PageBanner from "../components/PageBanner";
+import Button from "../../components/Button";
+import Container from "../../components/Container";
+import PageBanner from "../../components/PageBanner";
+import ErrorMsg from "../../components/messages/ErrorMsg";
+import AddShippingAddress from "../../components/AddShippingAddress";
+import CircularLoading from "../../components/loaders/CircularLoading";
 
 export default function OrderPayment() {
   //get data from location
@@ -124,19 +125,16 @@ export default function OrderPayment() {
 
                   <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                     {loading ? (
-                      <button className="w-full flex flex-col items-center justify-center bg-cyan-800 focus:outline-none focus:shadow-lg text-md text-white font-medium font-heading py-[14px] px-[35px] mt-2 rounded-md disabled:bg-opacity-75 disabled:cursor-not-allowed">
+                      <Button type="fullLengthBtn" disabled>
                         <div className="flex items-center gap-2">
                           <div>Loading...</div>
                           <CircularLoading />
                         </div>
-                      </button>
+                      </Button>
                     ) : (
-                      <button
-                        onClick={placeOrderHandler}
-                        className="w-full flex flex-col items-center justify-center bg-cyan-800 hover:bg-cyan-900 focus:outline-none focus:shadow-lg text-md text-white font-medium font-heading py-[14px] px-[35px] mt-2 rounded-md"
-                      >
+                      <Button type="fullLengthBtn" onClick={placeOrderHandler}>
                         Confirm Payment - ₹ {sumTotalPrice.toFixed(2)}
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </div>

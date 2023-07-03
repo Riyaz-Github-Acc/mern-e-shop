@@ -89,7 +89,7 @@ export default function ShoppingCart() {
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="h-32 w-32 rounded-md object-cover object-center sm:h-48 sm:w-48"
+                          className="h-32 w-32 rounded-md object-cover object-center"
                         />
                       </div>
 
@@ -259,7 +259,7 @@ export default function ShoppingCart() {
                   sumTotalPrice,
                 }}
               >
-                <Button type="addToCartBtn">
+                <Button type="primaryBtn">
                   <span className="flex flex-row items-center justify-center gap-3">
                     <CreditScoreOutlined />
                     Proceed To Checkout
