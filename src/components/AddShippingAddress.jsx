@@ -165,9 +165,9 @@ const AddShippingAddress = () => {
                 <option value="" disabled selected>
                   --Select Country--
                 </option>
-                <option value="IN">India</option>
-                <option value="USA">United States</option>
-                <option value="CAN">Canada</option>
+                <option value="India">India</option>
+                <option value="United States">United States</option>
+                <option value="Canada">Canada</option>
               </select>
             </div>
           </div>

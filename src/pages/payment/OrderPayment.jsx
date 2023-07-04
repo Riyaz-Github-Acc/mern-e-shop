@@ -44,6 +44,9 @@ export default function OrderPayment() {
         totalPrice: sumTotalPrice,
       })
     );
+
+    // Remove Cart Items
+    localStorage.removeItem("cartItems");
   };
   const { loading, error } = useSelector((state) => state?.orders);
 
@@ -116,7 +119,7 @@ export default function OrderPayment() {
                       </dd>
                     </div> */}
                     <div className="flex items-center justify-between pt-6">
-                      <dt className="text-base font-medium">Sub Total</dt>
+                      <dt className="text-base font-medium">Total</dt>
                       <dd className="text-base font-medium text-gray-900">
                         ₹ {sumTotalPrice.toFixed(2)}
                       </dd>

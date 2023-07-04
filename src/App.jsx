@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 import Header from "./layout/header/Header";
 import AuthRoute from "./components/AuthRoute";
@@ -20,54 +20,63 @@ import AddReview from "./components/AddReview";
 const App = () => {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/products/:id" element={<Product />} />
-        <Route path="/products-filters" element={<ProductsFilters />} />
+        <Route
+          element={
+            <>
+              <Header />
+              <Outlet />
+              <Footer />
+            </>
+          }
+        >
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/products/:id" element={<Product />} />
+          <Route path="/products-filters" element={<ProductsFilters />} />
+
+          <Route
+            path="/shopping-cart"
+            element={
+              <AuthRoute>
+                <ShoppingCart />
+              </AuthRoute>
+            }
+          />
+
+          <Route
+            path="/order-payment"
+            element={
+              <AuthRoute>
+                <OrderPayment />
+              </AuthRoute>
+            }
+          />
+
+          <Route
+            path="/add-review/:id"
+            element={
+              <AuthRoute>
+                <AddReview />
+              </AuthRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <AuthRoute>
+                <Profile />
+              </AuthRoute>
+            }
+          />
+        </Route>
+
         <Route path="/success" element={<PaymentSuccess />} />
         <Route path="/failed" element={<PaymentFailed />} />
-
-        <Route
-          path="/shopping-cart"
-          element={
-            <AuthRoute>
-              <ShoppingCart />
-            </AuthRoute>
-          }
-        />
-
-        <Route
-          path="/order-payment"
-          element={
-            <AuthRoute>
-              <OrderPayment />
-            </AuthRoute>
-          }
-        />
-
-        <Route
-          path="/add-review/:id"
-          element={
-            <AuthRoute>
-              <AddReview />
-            </AuthRoute>
-          }
-        />
-
-        <Route
-          path="/profile"
-          element={
-            <AuthRoute>
-              <Profile />
-            </AuthRoute>
-          }
-        />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 };

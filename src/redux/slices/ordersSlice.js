@@ -19,7 +19,7 @@ const initialState = {
 // Create Order Action
 export const placeOrderAction = createAsyncThunk(
   "order/place-order",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
+  async (payload, { rejectWithValue, getState }) => {
     try {
       const { orderItems, shippingAddress, totalPrice } = payload;
 
@@ -106,7 +106,7 @@ const ordersSlice = createSlice({
   name: "orders",
   initialState,
   extraReducers: (builder) => {
-    //Create
+    // Create
     builder.addCase(placeOrderAction.pending, (state) => {
       state.loading = true;
     });

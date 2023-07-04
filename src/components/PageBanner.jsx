@@ -3,7 +3,7 @@ import pageBanner from "../assets/images/page/page-banner.jpeg";
 
 const PageBanner = ({ pageTitle }) => {
   return (
-    <section className="mb-24">
+    <section className="mb-14">
       <div
         style={{
           // background: `linear-gradient(90deg, rgba(239,68,68,0.7), rgba(21,94,117,0.7)), url(${pageBanner})`,
