@@ -15,6 +15,7 @@ import {
   Person,
   PhoneInTalkOutlined,
 } from "@mui/icons-material";
+import NoDataFound from "../messages/NoDataFound";
 
 export default function UserDetails() {
   // Get User from Store
@@ -37,8 +38,8 @@ export default function UserDetails() {
         "Something went wrong!"
       ) : (
         <>
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center gap-8">
+          <div className="flex flex-row items-center justify-between ml-5 sm:ml-0">
+            <div className="flex flex-col sm:flex-row items-center gap-8">
               <div className="w-48 h-[100%]">
                 <img
                   src={user?.image}
@@ -116,39 +117,40 @@ export default function UserDetails() {
 
           <div className="my-6 border-t border-gray-500"></div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 ml-5 sm:ml-0">
             <h2 className="text-xl font-semibold ">Shipping Address</h2>
 
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    <AccountCircleOutlined />
-                  </span>
-                  {user?.shippingAddress?.firstName}{" "}
-                  {user?.shippingAddress?.lastName}
+            {user?.shippingAddress ? (
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-row flex-wrap items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold">
+                      <AccountCircleOutlined />
+                    </span>
+                    {user?.shippingAddress?.firstName}{" "}
+                    {user?.shippingAddress?.lastName}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold">
+                      <PhoneInTalkOutlined />
+                    </span>
+                    {user?.shippingAddress?.phone}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold">
+                      <LocationOnOutlined />
+                    </span>
+                    {user?.shippingAddress?.address},{" "}
+                    {user?.shippingAddress?.city} -{" "}
+                    {user?.shippingAddress?.postalCode},{" "}
+                    {user?.shippingAddress?.state},{" "}
+                    {user?.shippingAddress?.country}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    <PhoneInTalkOutlined />
-                  </span>
-                  {user?.shippingAddress?.phone}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    <LocationOnOutlined />
-                  </span>
-                  {user?.shippingAddress?.address},{" "}
-                  {user?.shippingAddress?.city} -{" "}
-                  {user?.shippingAddress?.postalCode},{" "}
-                  {user?.shippingAddress?.state},{" "}
-                  {user?.shippingAddress?.country}
-                </div>
-              </div>
-
-              {/* <div className="flex flex-col gap-3">
+                {/* <div className="flex flex-col gap-3">
                 <div>
                   {loading ? (
                     <Button type="editDeleteBtn" disabled>
@@ -167,7 +169,10 @@ export default function UserDetails() {
                   )}
                 </div>
               </div> */}
-            </div>
+              </div>
+            ) : (
+              <NoDataFound />
+            )}
           </div>
         </>
       )}
