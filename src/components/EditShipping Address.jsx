@@ -9,7 +9,7 @@ import {
 import Button from "./Button";
 import ErrorMsg from "./messages/ErrorMsg";
 import SpinLoading from "./loaders/SpinLoading";
-import { DeliveryDiningOutlined } from "@mui/icons-material";
+import { DeliveryDiningOutlined, ArrowCircleRight } from "@mui/icons-material";
 import Container from "./Container";
 import { Link } from "react-router-dom";
 
@@ -60,7 +60,7 @@ const EditShippingAddress = () => {
           <Container>
             <form
               onSubmit={onSubmit}
-              className="mt-14 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-20"
+              className="mt-14 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-20 items-center"
             >
               <div>
                 <label
@@ -228,10 +228,18 @@ const EditShippingAddress = () => {
                     Upate Shipping Address
                   </span>
                 </Button>
+              </div>
 
-                <div className="text-sky-600 hover:text-sky-800 underline">
-                  <Link to="/shopping-cart">Go to Shopping Cart</Link>
-                </div>
+              <div className="text-sky-600 hover:text-sky-800 underline">
+                <Link
+                  to="/shopping-cart"
+                  className="flex items-center justify-end gap-2"
+                >
+                  <span>
+                    <ArrowCircleRight />
+                  </span>
+                  Go to Shopping Cart
+                </Link>
               </div>
             </form>
           </Container>

@@ -77,7 +77,7 @@ export default function UserDetails() {
               </div>
             </div>
 
-            {/* <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3">
               <div>
                 {loading ? (
                   <Button type="editDeleteBtn" disabled>
@@ -87,12 +87,14 @@ export default function UserDetails() {
                     </div>
                   </Button>
                 ) : (
-                  <Button type="editDeleteBtn">
-                    <div className="flex items-center gap-1">
-                      <EditOutlined fontSize="small" />
-                      <div className="text-[16px]">Edit</div>
-                    </div>
-                  </Button>
+                  <Link to={`/edit-profile/${user?._id}`}>
+                    <Button type="editDeleteBtn">
+                      <div className="flex items-center gap-1">
+                        <EditOutlined fontSize="small" />
+                        <div className="text-[16px]">Edit</div>
+                      </div>
+                    </Button>
+                  </Link>
                 )}
               </div>
 
@@ -113,7 +115,7 @@ export default function UserDetails() {
                   </Button>
                 )}
               </div>
-            </div> */}
+            </div>
           </div>
 
           <div className="my-6 border-t border-gray-500"></div>

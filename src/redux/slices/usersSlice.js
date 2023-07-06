@@ -4,6 +4,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import baseURL from "../../utils/baseURL";
 import { resetErrorAction, resetSuccessAction } from "./globalActions";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Initial State
 const initialState = {
@@ -139,9 +141,48 @@ export const getUserProfileAction = createAsyncThunk(
 
       // Make http request
       const { data } = await axios.get(`${baseURL}/users/profile`, config);
+
       return data;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Update User Action
+export const updateUserAction = createAsyncThunk(
+  "users/update-user",
+  async (
+    { userName, email, file, id },
+    { rejectWithValue, getState, dispatch }
+  ) => {
+    try {
+      // Token Authentication
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // "Content-Type": "multipart/form-data",
+        },
+      };
+
+      // FormData
+      // const formData = new FormData();
+      // formData.append("userName", userName);
+      // formData.append("email", email);
+      // if (file) {
+      //   formData.append("file", file);
+      // }
+
+      // Make http request
+      const { data } = await axios.put(
+        `${baseURL}/users/update/${id}`,
+        { userName, email },
+        config
+      );
+
+      return data;
+    } catch (error) {
       return rejectWithValue(error?.response?.data);
     }
   }
@@ -183,19 +224,6 @@ const usersSlice = createSlice({
       state.userAuth.userInfo = null;
     });
 
-    // Profile
-    builder.addCase(getUserProfileAction.pending, (state, action) => {
-      state.loading = true;
-    });
-    builder.addCase(getUserProfileAction.fulfilled, (state, action) => {
-      state.profile = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(getUserProfileAction.rejected, (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
-    });
-
     // Shipping Address
     builder.addCase(
       updateUserShippingAddressAction.pending,
@@ -217,6 +245,32 @@ const usersSlice = createSlice({
         state.loading = false;
       }
     );
+
+    // Profile
+    builder.addCase(getUserProfileAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getUserProfileAction.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getUserProfileAction.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+
+    // Update User
+    builder.addCase(updateUserAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUserAction.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(updateUserAction.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
 
     // Reset Error Action
     builder.addCase(resetErrorAction.pending, (state) => {

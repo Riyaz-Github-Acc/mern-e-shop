@@ -17,6 +17,7 @@ import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import PaymentFailed from "./pages/payment/PaymentFailed";
 import AddReview from "./components/AddReview";
 import EditShippingAddress from "./components/EditShipping Address";
+import EditProfile from "./components/EditProfile";
 
 const App = () => {
   return (
@@ -70,6 +71,14 @@ const App = () => {
             element={
               <AuthRoute>
                 <Profile />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/edit-profile/:id"
+            element={
+              <AuthRoute>
+                <EditProfile />
               </AuthRoute>
             }
           />
