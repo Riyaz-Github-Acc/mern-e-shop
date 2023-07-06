@@ -46,7 +46,7 @@ export default function OrderPayment() {
     );
 
     // Remove Cart Items
-    localStorage.removeItem("cartItems");
+    // localStorage.removeItem("cartItems");
   };
   const { loading, error } = useSelector((state) => state?.orders);
 

@@ -61,9 +61,6 @@ const Register = () => {
       })
     );
 
-    // Redirect After Register
-    // window.location.reload();
-
     // Reset Form
     setFormData({
       userName: "",
@@ -71,6 +68,13 @@ const Register = () => {
       password: "",
     });
   };
+
+  // Redirect After Register
+  useEffect(() => {
+    if (user) {
+      window.location.href = "/login";
+    }
+  }, [user]);
 
   return (
     <>

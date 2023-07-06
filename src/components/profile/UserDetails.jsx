@@ -16,6 +16,7 @@ import {
   PhoneInTalkOutlined,
 } from "@mui/icons-material";
 import NoDataFound from "../messages/NoDataFound";
+import { Link } from "react-router-dom";
 
 export default function UserDetails() {
   // Get User from Store
@@ -40,11 +41,11 @@ export default function UserDetails() {
         <>
           <div className="flex flex-row items-center justify-between ml-5 sm:ml-0">
             <div className="flex flex-col sm:flex-row items-center gap-8">
-              <div className="w-48 h-[100%]">
+              <div className="w-48 h-48">
                 <img
                   src={user?.image}
                   alt="profile-image"
-                  className="w-[100%] h-[100%] rounded-lg"
+                  className="w-[100%] h-[100%] rounded-lg object-cover"
                 />
               </div>
 
@@ -150,25 +151,27 @@ export default function UserDetails() {
                   </div>
                 </div>
 
-                {/* <div className="flex flex-col gap-3">
-                <div>
-                  {loading ? (
-                    <Button type="editDeleteBtn" disabled>
-                      <div className="flex items-center gap-2">
-                        <div>Loading...</div>
-                        <CircularLoading />
-                      </div>
-                    </Button>
-                  ) : (
-                    <Button type="editDeleteBtn">
-                      <div className="flex items-center gap-1">
-                        <EditOutlined fontSize="small" />
-                        <div className="text-[16px]">Edit</div>
-                      </div>
-                    </Button>
-                  )}
+                <div className="flex flex-col gap-3">
+                  <div>
+                    {loading ? (
+                      <Button type="editDeleteBtn" disabled>
+                        <div className="flex items-center gap-2">
+                          <div>Loading...</div>
+                          <CircularLoading />
+                        </div>
+                      </Button>
+                    ) : (
+                      <Link to="/edit-shippingAddress">
+                        <Button type="editDeleteBtn">
+                          <div className="flex items-center gap-1">
+                            <EditOutlined fontSize="small" />
+                            <div className="text-[16px]">Edit</div>
+                          </div>
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div> */}
               </div>
             ) : (
               <NoDataFound />

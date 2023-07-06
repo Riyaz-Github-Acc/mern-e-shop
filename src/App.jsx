@@ -16,6 +16,7 @@ import OrderPayment from "./pages/payment/OrderPayment";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import PaymentFailed from "./pages/payment/PaymentFailed";
 import AddReview from "./components/AddReview";
+import EditShippingAddress from "./components/EditShipping Address";
 
 const App = () => {
   return (
@@ -69,6 +70,15 @@ const App = () => {
             element={
               <AuthRoute>
                 <Profile />
+              </AuthRoute>
+            }
+          />
+
+          <Route
+            path="/edit-shippingAddress"
+            element={
+              <AuthRoute>
+                <EditShippingAddress />
               </AuthRoute>
             }
           />

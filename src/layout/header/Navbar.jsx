@@ -111,7 +111,7 @@ const Navbar = () => {
                 </Link>
               )}
 
-              <VolunteerActivismOutlined className="cursor-pointer" />
+              {/* <VolunteerActivismOutlined className="cursor-pointer" /> */}
               <Link to="/shopping-cart" className="flex flex-row items-center">
                 <LocalMallOutlined className="cursor-pointer" />
                 <div className="flex items-center justify-center w-[22px] h-[22px] bg-cyan-800 text-sm text-white rounded-full p-1">

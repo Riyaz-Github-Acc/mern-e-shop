@@ -10,7 +10,7 @@ const initialState = {
   loading: false,
   error: null,
   users: [],
-  user: {},
+  user: null,
   profile: {},
 
   userAuth: {
@@ -75,14 +75,12 @@ export const loginUserAction = createAsyncThunk(
 );
 
 // Logout Action
-export const logoutAction = createAsyncThunk(
-  "users/logout",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
-    // Remove Token
-    localStorage.removeItem("userToken");
-    return true;
-  }
-);
+export const logoutAction = createAsyncThunk("users/logout", async () => {
+  // Remove Token
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("cartItems");
+  return true;
+});
 
 // Update User Shipping Address Action
 export const updateUserShippingAddressAction = createAsyncThunk(
@@ -115,6 +113,9 @@ export const updateUserShippingAddressAction = createAsyncThunk(
         },
         config
       );
+
+      // Reload the page after successful address update
+      window.location.reload();
       return data;
     } catch (error) {
       console.log(error);

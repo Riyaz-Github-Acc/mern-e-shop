@@ -10,6 +10,7 @@ import Button from "./Button";
 import ErrorMsg from "./messages/ErrorMsg";
 import SpinLoading from "./loaders/SpinLoading";
 import { DeliveryDiningOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const AddShippingAddress = () => {
   //dispatch
@@ -64,6 +65,10 @@ const AddShippingAddress = () => {
             <p>State : {user?.shippingAddress?.state}</p>
             <p>Country : {user?.shippingAddress?.country}</p>
             <p>Phone : {user?.shippingAddress?.phone}</p>
+          </div>
+
+          <div className="text-indigo-600 hover:text-indigo-800 underline mt-3">
+            <Link to="/edit-shippingAddress">Edit here</Link>
           </div>
         </div>
       ) : (
