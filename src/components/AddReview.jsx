@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,6 +25,11 @@ export default function AddReview() {
     comment: "",
   });
 
+  // Get Data from Store
+  const { loading, error, isAdded } = useSelector((state) => state?.reviews);
+
+  const [added, setAdded] = useState(false);
+
   // onChange
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,17 +52,27 @@ export default function AddReview() {
       comment: "",
     });
 
-    // Redirect to product page
-    navigate(`/products/${id}`);
+    setAdded(true);
   };
 
-  // Get Data from Store
-  const { loading, error, isAdded } = useSelector((state) => state?.reviews);
+  useEffect(() => {
+    if (isAdded && added) {
+      // Redirect to product page
+      navigate(`/products/${id}`);
+    }
+  }, [isAdded, added, id, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      navigate(`/products/${id}`);
+    }
+  }, [error, id, navigate]);
 
   return (
     <>
       {error && <ErrorMsg message={error?.message} />}
       {isAdded && <SuccessMsg message="Thanks for the review" />}
+
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-black">

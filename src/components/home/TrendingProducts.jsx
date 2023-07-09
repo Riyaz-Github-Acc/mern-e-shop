@@ -34,7 +34,7 @@ const TrendingProducts = () => {
     <section className="my-24">
       <Container>
         <TitleLink
-          title="Trending Products"
+          title="New Arrivals"
           linkText="Browse All Products"
           link="/shop"
         />

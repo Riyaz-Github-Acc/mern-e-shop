@@ -79,6 +79,6 @@ const reviewsSlice = createSlice({
 });
 
 // Generate Reducer
-const reviewsReducer = reviewsSlice.reducer;
+const reviewReducer = reviewsSlice.reducer;
 
-export default reviewsReducer;
+export default reviewReducer;

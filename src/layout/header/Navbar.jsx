@@ -7,15 +7,17 @@ import {
   LogoutOutlined,
 } from "@mui/icons-material";
 
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import logo from "../../assets/images/logos/logo.png";
 
 import Container from "../../components/Container";
-import { useDispatch, useSelector } from "react-redux";
-import { getCartItemsFromLocalStorageAction } from "../../redux/slices/cartsSlice";
+import Search from "../../components/Search";
+
 import { logoutAction } from "../../redux/slices/usersSlice";
+import { getCartItemsFromLocalStorageAction } from "../../redux/slices/cartsSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -64,17 +66,25 @@ const Navbar = () => {
   return (
     <div className="z-20 relative text-gray-700 bg-zinc-200">
       <Container>
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-between gap-2">
           <div className="py-1">
             <Link to="/" onClick={() => setOpen(false)}>
-              <img src={logo} alt="logo" className="w-auto h-10 md:h-14" />
+              <img
+                src={logo}
+                alt="logo"
+                className="w-auto h-10 md:h-14 object-contain"
+              />
             </Link>
           </div>
 
-          <div className="flex flex-row gap-3 md:gap-5 items-center">
-            <nav className="flex flex-row gap-4 items-center">
+          <div className="w-[40%] hidden md:block rounded-md">
+            <Search />
+          </div>
+
+          <div className="flex flex-row gap-3 md:gap-3 items-center">
+            <nav className="flex flex-row gap-2 items-center">
               <div
-                className={`md:flex md:flex-row gap-5 items-center text-[18px] font-medium ${
+                className={`md:flex md:flex-row gap-3 items-center text-[18px] font-medium ${
                   !open
                     ? "hidden"
                     : "z-10 absolute top-12 right-0 flex flex-col items-center justify-center gap-2 w-full bg-gray-500 text-stone-100 px-10 py-5 transition-all"
@@ -100,7 +110,7 @@ const Navbar = () => {
               </div>
             </nav>
 
-            <div className="flex flex-row gap-3 md:gap-4 items-center">
+            <div className="flex flex-row items-center gap-2">
               {isLoggedIn ? (
                 <Link to="/profile">
                   <Person4Outlined className="cursor-pointer" />

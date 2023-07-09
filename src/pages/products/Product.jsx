@@ -129,7 +129,7 @@ export default function Product() {
             <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-6 lg:gap-16 py-16">
               {/* Image Gallery */}
               <section className="flex-1 flex flex-col sm:flex-row justify-between gap-5 lg:gap-10">
-                <div className="w-6/6 sm:w-2/6 h-[250px] flex flex-row sm:flex-col items-center gap-2 sm:gap-4 order-2 md:order-1 object-cover">
+                <div className="w-6/6 sm:w-2/6 w-full h-[200px] sm:h-[250px] flex flex-row sm:flex-col items-center gap-2 sm:gap-4 order-2 md:order-1 object-cover">
                   <img
                     src={product?.images[0]}
                     alt="product?.images[0]"

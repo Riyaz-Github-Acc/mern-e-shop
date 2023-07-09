@@ -1,3 +1,4 @@
+import Search from "../../components/Search";
 import Navbar from "./Navbar";
 import Topbar from "./Topbar";
 
@@ -6,6 +7,9 @@ const Header = () => {
     <>
       <Topbar />
       <Navbar />
+      <div className="block md:hidden">
+        <Search />
+      </div>
     </>
   );
 };

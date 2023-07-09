@@ -18,7 +18,9 @@ export default function OrderDetails() {
   const { profile, loading, error } = useSelector((state) => state?.users);
 
   // Get Orders
-  const orders = profile?.user?.orders;
+  const orders = [...(profile?.user?.orders ?? [])].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   return (
     <main>
@@ -73,17 +75,17 @@ export default function OrderDetails() {
                     <div
                       className={`border ${
                         order?.status === "pending" &&
-                        "border-yellow-600 text-yellow-600"
+                        "border-orange-500 text-orange-500"
+                      } ${
+                        order?.status === "processing" &&
+                        "border-sky-700 text-sky-700"
                       } ${
                         order?.status === "shipping" &&
-                        "border-sky-600 text-sky-600"
+                        "border-blue-800 text-blue-800"
                       } ${
                         order?.status === "delivered" &&
-                        "border-green-700 text-green-700"
-                      } ${
-                        order?.status === "cancelled" &&
-                        "border-red-500 text-red-500"
-                      } text-sm capitalize rounded-full py-1 px-3`}
+                        "border-green-600 text-green-600"
+                      }  text-sm font-semibold capitalize rounded-full py-1 px-3`}
                     >
                       {order?.status}
                     </div>
@@ -119,12 +121,12 @@ export default function OrderDetails() {
                       {order?.totalPrice.toFixed(2)}
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between capitalize">
                       <span className="font-medium">Payment Status</span>
                       {order?.paymentStatus}
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between capitalize">
                       <span className="font-medium">Payment Method</span>
                       {order?.paymentMethod}
                     </div>

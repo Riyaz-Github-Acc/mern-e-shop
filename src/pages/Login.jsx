@@ -36,7 +36,7 @@ const Login = () => {
 
   // Redirect after Login
   if (userInfo?.token) {
-    window.location.href = "/profile";
+    window.location.href = "/";
   }
 
   return (

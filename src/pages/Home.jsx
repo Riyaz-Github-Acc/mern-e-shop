@@ -16,7 +16,9 @@ const Home = () => {
 
       <Container>
         <div className="flex flex-col items-center justify-center gap-5 text-center my-16">
-          <Heading>Get 25% off during our one-time sale</Heading>
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold">
+            Get 25% off during our one-time sale
+          </h2>
 
           <div className="flex flex-col gap-2 md:gap-1 text-lg md:text-xl font-medium text-gray-500 px-1">
             <p>
