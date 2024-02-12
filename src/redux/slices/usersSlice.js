@@ -4,8 +4,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import baseURL from "../../utils/baseURL";
 import { resetErrorAction, resetSuccessAction } from "./globalActions";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Initial State
 const initialState = {
