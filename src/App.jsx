@@ -21,7 +21,7 @@ import EditProfile from "./components/EditProfile";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <Routes>
         <Route
           element={
@@ -95,8 +95,10 @@ const App = () => {
 
         <Route path="/success" element={<PaymentSuccess />} />
         <Route path="/failed" element={<PaymentFailed />} />
+
+        <Route path="*" element={<div />} />
       </Routes>
-    </BrowserRouter>
+    // </BrowserRouter>
   );
 };
 

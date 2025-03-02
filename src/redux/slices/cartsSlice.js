@@ -15,13 +15,13 @@ const initialState = {
 export const addOrderToCartAction = createAsyncThunk(
   "cart/add-to-cart",
   async (cartItem) => {
-    const cartItems = localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
+    const cartItems = typeof window !== 'undefined' && localStorage.getItem("cartItems")
+      ? JSON.parse(typeof window !== 'undefined' && localStorage.getItem("cartItems"))
       : [];
 
     // Push to Local Storage
     cartItems.push(cartItem);
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    typeof window !== 'undefined' && localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
 );
 
@@ -29,8 +29,8 @@ export const addOrderToCartAction = createAsyncThunk(
 export const getCartItemsFromLocalStorageAction = createAsyncThunk(
   "cart/get-order-items",
   async () => {
-    const cartItems = localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
+    const cartItems = typeof window !== 'undefined' && localStorage.getItem("cartItems")
+      ? JSON.parse(typeof window !== 'undefined' && localStorage.getItem("cartItems"))
       : [];
 
     return cartItems;
@@ -42,8 +42,8 @@ export const changeOrderItemQty = createAsyncThunk(
   "cart/change-item-qty",
   async ({ productId, qty }) => {
     console.log(productId, qty);
-    const cartItems = localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
+    const cartItems = typeof window !== 'undefined' && localStorage.getItem("cartItems")
+      ? JSON.parse(typeof window !== 'undefined' && localStorage.getItem("cartItems"))
       : [];
 
     const newCartItems = cartItems?.map((item) => {
@@ -55,7 +55,7 @@ export const changeOrderItemQty = createAsyncThunk(
       }
       return item;
     });
-    localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+    typeof window !== 'undefined' && localStorage.setItem("cartItems", JSON.stringify(newCartItems));
   }
 );
 
@@ -63,11 +63,11 @@ export const changeOrderItemQty = createAsyncThunk(
 export const removeOrderItemQty = createAsyncThunk(
   "cart/remove-order-item",
   async (productId) => {
-    const cartItems = localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
+    const cartItems = typeof window !== 'undefined' && localStorage.getItem("cartItems")
+      ? JSON.parse(typeof window !== 'undefined' && localStorage.getItem("cartItems"))
       : [];
     const newItems = cartItems?.filter((item) => item?._id !== productId);
-    localStorage.setItem("cartItems", JSON.stringify(newItems));
+    typeof window !== 'undefined' && localStorage.setItem("cartItems", JSON.stringify(newItems));
   }
 );
 

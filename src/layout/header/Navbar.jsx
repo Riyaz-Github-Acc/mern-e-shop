@@ -24,7 +24,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   // Find the User
-  const user = JSON.parse(localStorage.getItem("userToken"));
+  const user = JSON.parse(typeof window !== 'undefined' && localStorage.getItem("userToken"));
   const isLoggedIn = user?.token ? true : false;
 
   // Get Cart Items from Local Storage

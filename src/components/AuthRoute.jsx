@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 
 const AuthRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("userToken"));
+  const user = JSON.parse(typeof window !== 'undefined' && localStorage.getItem("userToken"));
   // if (user) {
   //   return <Home />;
   // }

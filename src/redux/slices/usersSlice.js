@@ -14,8 +14,8 @@ const initialState = {
   profile: {},
 
   userAuth: {
-    userInfo: localStorage.getItem("userToken")
-      ? JSON.parse(localStorage.getItem("userToken"))
+    userInfo: typeof window !== 'undefined' && localStorage.getItem("userToken")
+      ? JSON.parse(typeof window !== 'undefined' && localStorage.getItem("userToken"))
       : null,
     loading: false,
     error: null,
@@ -66,7 +66,7 @@ export const loginUserAction = createAsyncThunk(
       });
 
       // Save the User in Local Storage
-      localStorage.setItem("userToken", JSON.stringify(data));
+      typeof window !== 'undefined' && localStorage.setItem("userToken", JSON.stringify(data));
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -77,8 +77,8 @@ export const loginUserAction = createAsyncThunk(
 // Logout Action
 export const logoutAction = createAsyncThunk("users/logout", async () => {
   // Remove Token
-  localStorage.removeItem("userToken");
-  localStorage.removeItem("cartItems");
+  typeof window !== 'undefined' && localStorage.removeItem("userToken");
+  typeof window !== 'undefined' && localStorage.removeItem("cartItems");
   return true;
 });
 
