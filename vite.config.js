@@ -5,8 +5,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     ssr: true,
-    ssrInternal: true,
-    // Specify the SSR entry point
-    ssrEntry: 'src/entry-server.jsx',
+    rollupOptions: {
+      input: 'src/entry-server.jsx', // Specify the SSR entry point
+    },
   },
 })
